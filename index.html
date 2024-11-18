@@ -14,20 +14,19 @@
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      background: linear-gradient(135deg, #6c757d, #495057); /* Серый градиент */
-      background-size: 600% 600%; /* Для анимации фона */
-      animation: gradientAnimation 10s ease infinite; /* Анимация градиента */
+      background: linear-gradient(135deg, #6c757d, #495057);
+      background-size: 600% 600%;
+      animation: gradientAnimation 10s ease infinite;
     }
 
     canvas {
       display: block;
     }
 
-    /* Главное меню */
     #menu {
       text-align: center;
       display: block;
-      background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон для блока */
+      background: rgba(0, 0, 0, 0.7);
       padding: 50px;
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -58,7 +57,6 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
     }
 
-    /* Стиль выбора комнаты */
     #game {
       display: none;
       text-align: center;
@@ -86,7 +84,6 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
-    /* Анимации */
     .button, .room-button {
       transform: translateY(10px);
       opacity: 0;
@@ -112,7 +109,6 @@
       }
     }
 
-    /* Кнопка смены режима в игре */
     #toggleMode {
       position: absolute;
       top: 20px;
@@ -132,7 +128,6 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
     }
 
-    /* Анимация градиента фона */
     @keyframes gradientAnimation {
       0% {
         background-position: 0% 50%;
@@ -147,18 +142,15 @@
   </style>
 </head>
 <body>
-  <!-- Главное меню -->
   <div id="menu">
     <h1>Physics Simulator</h1>
-    <button class="button" id="startButton">Играть</button>
+    <button class="button" id="startButton">Play</button>
   </div>
 
-  <!-- Выбор комнаты -->
   <div id="game">
-    <h2>Выберите комнату</h2>
-    <button class="room-button" id="roomButton">Стандарт</button>
+    <h2>Choose Room</h2>
+    <button class="room-button" id="roomButton">Standard</button>
   </div>
-
   <script src="simulator.js"></script>
 </body>
 </html>
