@@ -2,7 +2,6 @@ const { Engine, Render, World, Bodies, Body, Mouse, MouseConstraint, Events, Run
 
 let engine, world, render, runner, createMode = true;
 
-// Функция для инициализации игры
 function startGame() {
   engine = Engine.create();
   world = engine.world;
@@ -20,20 +19,17 @@ function startGame() {
   runner = Runner.create();
   Runner.run(runner, engine);
 
-  // Стены
   const walls = [
-    Bodies.rectangle(window.innerWidth / 2, 0, window.innerWidth, 50, { isStatic: true }), // Верхняя стена
-    Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 50, { isStatic: true }), // Нижняя стена
-    Bodies.rectangle(0, window.innerHeight / 2, 50, window.innerHeight, { isStatic: true }), // Левая стена
-    Bodies.rectangle(window.innerWidth, window.innerHeight / 2, 50, window.innerHeight, { isStatic: true }), // Правая стена
+    Bodies.rectangle(window.innerWidth / 2, 0, window.innerWidth, 50, { isStatic: true }),
+    Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 50, { isStatic: true }),
+    Bodies.rectangle(0, window.innerHeight / 2, 50, window.innerHeight, { isStatic: true }),
+    Bodies.rectangle(window.innerWidth, window.innerHeight / 2, 50, window.innerHeight, { isStatic: true }),
   ];
   World.add(world, walls);
 
-  // Пол
   const floor = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 25, window.innerWidth, 50, { isStatic: true });
   World.add(world, floor);
 
-  // Мышь для взаимодействия
   const mouse = Mouse.create(render.canvas);
   const mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
@@ -46,23 +42,20 @@ function startGame() {
   });
   World.add(world, mouseConstraint);
 
-  // Функция для создания кубика
   function createBox(x, y) {
     const box = Bodies.rectangle(x, y, 50, 50, { restitution: 0.8 });
     World.add(world, box);
   }
 
-  // Обработчик мыши для создания и управления кубиками
   render.canvas.addEventListener('click', (event) => {
     const mousePosition = mouse.position;
 
     if (createMode) {
-      createBox(mousePosition.x, mousePosition.y); // В режиме создания создаём кубик
+      createBox(mousePosition.x, mousePosition.y);
     } else {
-      // В режиме управления: просто перемещаем кубик, если он есть
       const selected = mouseConstraint.body;
       if (selected) {
-        const forceMagnitude = 0.001; // Уменьшена сила импульса
+        const forceMagnitude = 0.001;
         Body.applyForce(selected, selected.position, {
           x: (mousePosition.x - selected.position.x) * forceMagnitude,
           y: (mousePosition.y - selected.position.y) * forceMagnitude,
@@ -71,16 +64,13 @@ function startGame() {
     }
   });
 
-  // Остановка по краям и уничтожение кубиков, которые выходят за пределы
   Events.on(engine, 'collisionStart', (event) => {
     event.pairs.forEach((pair) => {
-      // Если кубик выходит за пределы экрана, он уничтожается
       if (pair.bodyA === floor || pair.bodyB === floor) {
         const body = pair.bodyA === floor ? pair.bodyB : pair.bodyA;
         if (body.position.x < 0 || body.position.x > window.innerWidth || body.position.y < 0 || body.position.y > window.innerHeight) {
           World.remove(world, body);
         }
-        // Кубик столкнулся с полом, применим силу для отскока
         Body.applyForce(body, body.position, { x: 0, y: -0.1 });
       }
     });
@@ -91,26 +81,23 @@ function startGame() {
     render.canvas.height = window.innerHeight;
   });
 
-  // Добавляем кнопку переключения режима
   const toggleModeButton = document.createElement('button');
-  toggleModeButton.textContent = "Переключить режим";
+  toggleModeButton.textContent = "Switch Mode";
   toggleModeButton.id = "toggleMode";
   document.body.appendChild(toggleModeButton);
 
   toggleModeButton.addEventListener('click', () => {
     createMode = !createMode;
-    toggleModeButton.textContent = createMode ? 'Переключить режим на управление' : 'Переключить режим на создание';
+    toggleModeButton.textContent = createMode ? 'Switch to Control Mode' : 'Switch to Creation Mode';
   });
 }
 
-// Главное меню
 document.getElementById('startButton').addEventListener('click', () => {
   document.getElementById('menu').style.display = 'none';
   document.getElementById('game').style.display = 'block';
 });
 
-// Выбор комнаты
 document.getElementById('roomButton').addEventListener('click', () => {
   startGame();
-  document.getElementById('game').style.display = 'none'; // Убираем выбор комнаты
+  document.getElementById('game').style.display = 'none';
 });
