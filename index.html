@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics Simulator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #6c757d, #495057); /* Серый градиент */
+      background-size: 600% 600%; /* Для анимации фона */
+      animation: gradientAnimation 10s ease infinite; /* Анимация градиента */
+    }
+
+    canvas {
+      display: block;
+    }
+
+    /* Главное меню */
+    #menu {
+      text-align: center;
+      display: block;
+      background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон для блока */
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 50px;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    .button {
+      background-color: #1c1c1c;
+      color: white;
+      font-size: 20px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 20px;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .button:hover {
+      background-color: #444;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Стиль выбора комнаты */
+    #game {
+      display: none;
+      text-align: center;
+    }
+
+    #game h2 {
+      font-size: 40px;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .room-button {
+      background-color: #007BFF;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+      transition: 0.3s;
+    }
+
+    .room-button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Анимации */
+    .button, .room-button {
+      transform: translateY(10px);
+      opacity: 0;
+      animation: fadeInUp 0.5s forwards;
+    }
+
+    .button:nth-child(1), .room-button:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    .button:nth-child(2), .room-button:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Кнопка смены режима в игре */
+    #toggleMode {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #toggleMode:hover {
+      background-color: #444;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Анимация градиента фона */
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Главное меню -->
+  <div id="menu">
+    <h1>Physics Simulator</h1>
+    <button class="button" id="startButton">Играть</button>
+  </div>
+
+  <!-- Выбор комнаты -->
+  <div id="game">
+    <h2>Выберите комнату</h2>
+    <button class="room-button" id="roomButton">Стандарт</button>
+  </div>
+
+  <script src="simulator.js"></script>
+</body>
+</html>
